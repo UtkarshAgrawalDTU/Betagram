@@ -1,0 +1,18 @@
+{% extends 'betagram/base.html' %}
+
+{% block body %}
+
+{% if request.user.is_authenticated %}
+<h1>You are logged in</h1>
+
+{%for post in posts %}
+<img src="{{post.image.url}}">
+{% endfor %}
+
+{% else %}
+<h1>Betagram</h1>
+
+{% endif %}
+
+
+{% endblock %}

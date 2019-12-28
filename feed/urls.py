@@ -5,5 +5,5 @@ from .views import FeedView
 app_name = 'feed'
 
 urlpatterns = [
-    path('', FeedView.as_view(), name = 'home'),
+    path('', FeedView, name = 'home'),
 ]

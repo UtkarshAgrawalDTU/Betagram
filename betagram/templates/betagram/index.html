@@ -6,7 +6,9 @@
 <h1>You are logged in</h1>
 
 {% for post in posts %}
+
 <img src="{{post.image.url}}">
+<h2>{{post.likecount}}</h2>
 {% endfor %}
 
 {% else %}

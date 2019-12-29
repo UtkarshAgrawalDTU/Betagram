@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from users.views import UserLogoutView, UserLoginView, UserRegisterView
+from users.views import UserLogoutView, UserLoginView, UserRegisterView, ProfileView
 from django.conf.urls.static import static
 from . import settings
 
@@ -10,7 +10,8 @@ urlpatterns = [
     path('logout/', UserLogoutView.as_view(), name = 'logout'),
     path('', include('feed.urls')),
     path('<int:pk>/', include('posts.urls')),
-    path('register/', UserRegisterView, name = 'register')
+    path('register/', UserRegisterView, name = 'register'),
+    path('profile-<str:username>/', ProfileView, name = 'profile')
 ]
 
 if settings.DEBUG:

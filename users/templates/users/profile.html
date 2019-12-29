@@ -1,0 +1,25 @@
+{% extends 'betagram/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+<h1>Profile</h1>
+<img src="{{user.profile.image.url}}">
+<h2>{{user.username}}</h2>
+<h2>{{user.profile.bio}}</h2>
+
+{% if request.user == user%}
+<a class="btn btn-secondary btn-lg mt-1 mb-1" href="">Edit</a>
+{% endif %}
+
+<br>
+<br>
+
+{% if request.user == user or is_follower %}
+<h2>Posts</h2>
+{% for post in user.post_set.all %}
+<a href = "{{ post.get_absolute_url }}"><img src="{{post.image.url}}" width="200", height="200"></a>
+{% endfor %}
+
+{% endif %}
+
+{% endblock %}

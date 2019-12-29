@@ -1,0 +1,31 @@
+{% extends 'betagram/base.html' %}
+
+{% block body %}
+
+    <a href = "">
+        <img src="{{post.owner.image.url}}" class = "rounded-circle" width="50px" height="50px">
+    </a>
+    <h3>{{post.owner}}</h3>
+    <img src="{{post.image.url}}" >
+    <h3>Likes - {{post.likecount}}</h3>
+    <h3>{{post.caption}}</h3>
+
+    {% if post.commentonpost_set.all%}
+
+    {% for comment in post.commentonpost_set.all %}
+        <h4>{{comment.user.username}} - {{comment.comment}}</h4>
+        <h5>{{comment.likecount}}</h5>
+    {% endfor %}
+
+    {% endif %}
+
+    <h5>{{post.date}}</h5>
+    {% if post.owner == request.user %}
+    <div>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="">Delete</a>
+    </div>
+    {% endif %}
+
+
+{% endblock %}

@@ -3,12 +3,14 @@
 {% block body %}
 
 {% if request.user.is_authenticated %}
-<h1>You are logged in</h1>
+<h1>Feed</h1>
 
 {% for post in posts %}
 
-<img src="{{post.image.url}}">
+<h3>{{post.owner.username}}</h3>
+<a href = "{%url 'posts:post_detail' post.id %}"><img src="{{post.image.url}}"></a>
 <h2>{{post.likecount}}</h2>
+<h3>{{post.caption}}</h3>
 {% endfor %}
 
 {% else %}

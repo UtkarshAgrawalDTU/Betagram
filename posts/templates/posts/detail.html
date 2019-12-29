@@ -23,8 +23,8 @@
     <h5>{{post.date}}</h5>
     {% if post.owner == request.user %}
     <div>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="">Update</a>
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="">Delete</a>
+        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'posts:post_update' post.id %}">Update</a>
+        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'posts:post_delete' post.id %}">Delete</a>
     </div>
     {% endif %}
 

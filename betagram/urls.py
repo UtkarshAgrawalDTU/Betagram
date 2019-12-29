@@ -3,6 +3,7 @@ from django.urls import path, include
 from users.views import UserLogoutView, UserLoginView, UserRegisterView, ProfileView, EditProfileView
 from django.conf.urls.static import static
 from . import settings
+from posts.views import PostCreateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -13,6 +14,7 @@ urlpatterns = [
     path('register/', UserRegisterView, name = 'register'),
     path('profile-<str:username>/', ProfileView, name = 'profile'),
     path('profile-<str:username>/edit/', EditProfileView, name = 'profile-edit'),
+    path('create/', PostCreateView.as_view(), name = 'create')
 ]
 
 if settings.DEBUG:

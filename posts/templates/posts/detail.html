@@ -3,15 +3,16 @@
 {% block body %}
 
     <a href = "">
-        <img src="{{post.owner.image.url}}" class = "rounded-circle" width="50px" height="50px">
+        <img src="{{post.owner.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
+        <h3>{{post.owner}}</h3>
     </a>
-    <h3>{{post.owner}}</h3>
+    
     <img src="{{post.image.url}}" >
     <h3>Likes - {{post.likecount}}</h3>
     <h3>{{post.caption}}</h3>
-
+    <br>
     {% if post.commentonpost_set.all%}
-
+    <h3>Comments</h3>
     {% for comment in post.commentonpost_set.all %}
         <h4>{{comment.user.username}} - {{comment.comment}}</h4>
         <h5>{{comment.likecount}}</h5>

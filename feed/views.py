@@ -16,7 +16,7 @@ def FeedView(request):
     posts = Post.objects.filter(owner = request.user)
     following = User.objects.filter(profile__in = profile_following)
     posts = posts.union(Post.objects.filter(owner__in = following)).order_by('-date')
-    context = {'posts' : posts}
+    context = {'all_posts' : posts}
     return render(request, 'betagram/index.html', context)
 
 

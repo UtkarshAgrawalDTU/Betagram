@@ -5,5 +5,4 @@ app_name = 'feed'
 
 urlpatterns = [
     path('', FeedView, name = 'home'),
-    path('<int:pk>/', include('posts.urls')),
 ]

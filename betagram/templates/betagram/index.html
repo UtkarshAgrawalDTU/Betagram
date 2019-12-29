@@ -5,12 +5,13 @@
 {% if request.user.is_authenticated %}
 <h1>Feed</h1>
 
-{% for post in posts %}
+{% for post in all_posts %}
 
 <h3>{{post.owner.username}}</h3>
-<a href = "{%url 'posts:post_detail' post.id %}"><img src="{{post.image.url}}"></a>
+<a href = "{% url 'posts:post_detail' post.id %}"><img src="{{post.image.url}}"></a>
 <h2>{{post.likecount}}</h2>
 <h3>{{post.caption}}</h3>
+
 {% endfor %}
 
 {% else %}

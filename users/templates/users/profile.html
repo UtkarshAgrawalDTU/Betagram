@@ -5,7 +5,8 @@
 <h1>Profile</h1>
 <img src="{{user.profile.image.url}}">
 <h2>{{user.username}}</h2>
-<h2>{{user.profile.bio}}</h2>
+<h2>Posts - {{user.post_set.count}}   Followers - {{user.profile.followers.count}}    Following - {{user.profile.following.count}}</h2>
+<h3>{{user.profile.bio}}</h3>
 
 {% if request.user == user%}
 <a class="btn btn-secondary btn-lg mt-1 mb-1" href="">Edit</a>

@@ -3,16 +3,10 @@
 
 {% block body %}
 
-{% if request.user.is_authenticated %}
-<h1>You are already logged in</h1>
-
-{% else%}
 <form method="POST">
     {% csrf_token %}
     {{form|crispy}}
 <button type="submit">Submit</button>
 </form>
-
-{% endif %}
 
 {% endblock %}

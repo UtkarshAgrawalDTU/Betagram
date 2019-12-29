@@ -8,7 +8,7 @@
 {% for post in all_posts %}
 
 <h3>{{post.owner.username}}</h3>
-<a href = "{% url 'posts:post_detail' post.id %}"><img src="{{post.image.url}}"></a>
+<a href = "{{ post.get_absolute_url }}"><img src="{{post.image.url}}"></a>
 <h2>{{post.likecount}}</h2>
 <h3>{{post.caption}}</h3>
 

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
 from PIL import Image
+from django.shortcuts import reverse
 
 
 class Post(models.Model):
@@ -13,6 +14,9 @@ class Post(models.Model):
 
     def __str__(self):
         return f'{self.owner.username} - {self.date}'
+
+    def get_absolute_url(self):
+        return reverse('posts:post_detail', kwargs={'pk' : self.pk})
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

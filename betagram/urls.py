@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
-from users.views import UserLogoutView, UserLoginView, UserRegisterView, ProfileView
+from users.views import UserLogoutView, UserLoginView, UserRegisterView, ProfileView, EditProfileView
 from django.conf.urls.static import static
 from . import settings
 
@@ -11,7 +11,8 @@ urlpatterns = [
     path('', include('feed.urls')),
     path('<int:pk>/', include('posts.urls')),
     path('register/', UserRegisterView, name = 'register'),
-    path('profile-<str:username>/', ProfileView, name = 'profile')
+    path('profile-<str:username>/', ProfileView, name = 'profile'),
+    path('profile-<str:username>/edit/', EditProfileView, name = 'profile-edit'),
 ]
 
 if settings.DEBUG:

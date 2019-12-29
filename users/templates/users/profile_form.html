@@ -1,0 +1,13 @@
+{% extends 'betagram/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block body %}
+
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ u_form|crispy }}
+  {{ p_form|crispy }}
+  <button type="submit">Submit</button>
+</form>
+
+{% endblock %}

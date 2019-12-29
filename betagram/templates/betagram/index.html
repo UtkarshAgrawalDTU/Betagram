@@ -6,8 +6,10 @@
 <h1>Feed</h1>
 
 {% for post in all_posts %}
-
-<h3>{{post.owner.username}}</h3>
+<a href = "{% url 'profile' post.owner.username %}">
+    <img src="{{post.owner.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
+    <h3>{{post.owner.username}}</h3>
+</a>
 <a href = "{{ post.get_absolute_url }}"><img src="{{post.image.url}}"></a>
 <h2>{{post.likecount}}</h2>
 <h3>{{post.caption}}</h3>
@@ -18,6 +20,5 @@
 <h1>Betagram</h1>
 
 {% endif %}
-
 
 {% endblock %}

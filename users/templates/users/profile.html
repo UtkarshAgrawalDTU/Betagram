@@ -6,7 +6,30 @@
 <img src="{{user.profile.image.url}}">
 <h2>{{user.username}}</h2>
 <h2>{{user.first_name}}  {{user.last_name}}</h2>
-<h2>Posts - {{user.post_set.count}}   Followers - {{user.profile.followers.count}}    Following - {{user.profile.following.count}}</h2>
+
+<h2>Posts - {{user.post_set.count}}</h2>  
+
+{% if is_following or user == request.user %}
+<a href="{% url 'follower_list' user.username %}">
+    <h2>Followers - {{user.profile.followers.count}}</h2>
+</a>
+
+{% else %}
+    <h2>Followers - {{user.profile.followers.count}}</h2>
+
+{% endif %}
+
+
+
+{% if is_following or user == request.user %}
+<a href="{% url 'following_list' user.username %}">
+    <h2>Following - {{user.profile.following.count}}</h2>    
+</a>
+
+{% else %}
+    <h2>Following - {{user.profile.following.count}}</h2> 
+    
+{% endif %}
 <h3>{{user.profile.bio}}</h3>
 
 

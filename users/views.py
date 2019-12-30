@@ -1,15 +1,15 @@
 from django.contrib.auth.views import LogoutView, LoginView
-from .forms import UserRegisterForm
-from django.shortcuts import redirect, render, get_object_or_404
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from posts.models import Post
-from django.http import HttpResponseForbidden
-from .forms import UserUpdateForm, ProfileUpdateForm
-from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect, render, get_object_or_404
+from django.contrib import messages
+from django.http import HttpResponseForbidden
+from django.views.generic import ListView
+from posts.models import Post
 from .models import Request
+from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+
 
 @login_required
 def RequestView(request, **kwargs):
@@ -117,7 +117,47 @@ def EditProfileView(request, **kwargs):
 
 
 
+@login_required
+def FollowerListView(request, **kwargs):
+    
+    user = get_object_or_404(User, username = kwargs['username'])
+    
+    if not request.user.profile.following.filter(user = user).exists() and not request.user == user:
+        return HttpResponseForbidden()
+    
+    object_list = user.profile.followers.all()
 
+    if request.method == 'POST':
+
+        follower = User.objects.get(username = request.POST['follower'])
+        status = request.POST['status']
+        
+        if status == 'unfollowed':
+            user.profile.followers.remove(follower.profile)
+
+    return render(request, 'users/follower_list.html', {'followers': object_list})
+
+
+
+@login_required
+def FollowingListView(request, **kwargs):
+    
+    user = get_object_or_404(User, username = kwargs['username'])
+    
+    if not request.user.profile.following.filter(user = user).exists() and not request.user == user:
+        return HttpResponseForbidden()
+
+    object_list = user.profile.following.all()
+
+    if request.method == 'POST':
+
+        following = User.objects.get(username = request.POST['following'])
+        status = request.POST['status']
+        
+        if status == 'unfollow':
+            user.profile.following.remove(following.profile)
+
+    return render(request, 'users/following_list.html', {'following_list': object_list})
 
 
         

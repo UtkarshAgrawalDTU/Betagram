@@ -12,13 +12,46 @@
 
 
 {% if request.user == user %}
-<a class="btn btn-secondary btn-lg mt-1 mb-1" href="{% url 'profile-edit' request.user.username %}">Edit</a>
+<a class="btn btn-secondary btn-lg mt-1 mb-1" href="{% url 'profile-edit' username=request.user.username %}">Edit</a>
+
+
+{% elif is_following %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="unfollow">
+    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit"">Unfollow</button>
+</form>
+
+
+{% elif request_sent %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="remove_request">
+    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Request Sent -- Remove follow request</button>
+</form>
+
+
+{% else %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="follow">
+    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Follow</button>
+</form>
+{% endif %}
+
+
+{% if is_followed %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="unfollowed">
+    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Remove Follower</button>
+</form>
 {% endif %}
 
 <br>
 <br>
 
-{% if request.user == user or is_follower %}
+{% if request.user == user or is_following %}
 <h2>Posts</h2>
 {% for post in user.post_set.all %}
 <a href = "{{ post.get_absolute_url }}"><img src="{{post.image.url}}" width="200", height="200"></a>

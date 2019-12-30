@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.utils.timezone import now
 
 
 class Profile(models.Model):
@@ -30,6 +31,7 @@ class Request(models.Model):
 
     follower_req = models.ForeignKey(User, on_delete = models.CASCADE, related_name='requests_by_me')
     following_req = models.ForeignKey(User, on_delete = models.CASCADE, related_name='requests_for_me')
+    date = models.DateTimeField(default = now)
 
     class Meta:
         unique_together = ('follower_req', 'following_req',)

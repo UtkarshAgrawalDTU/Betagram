@@ -1,0 +1,34 @@
+{% extends 'betagram/base.html' %}
+
+{% block body %}
+
+<h1>Requests</h1>
+<br>
+<br>
+{% for request in requests %}
+
+<h2>{{ request.follower_req.username }} sent you a request </h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="follower" value="{{request.follower_req.username}}">
+    <input type="hidden" name="status" value="accept">
+    <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
+</form>
+
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="follower" value="{{request.follower_req.username}}">
+    <input type="hidden" name="status" value="reject">
+    <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
+</form>
+
+<br>
+
+{% endfor %}
+
+{% if requests.count == 0 %}
+<h3>No requests</h3>
+{% endif %}
+{% endblock %}

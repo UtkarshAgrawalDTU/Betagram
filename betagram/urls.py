@@ -14,7 +14,8 @@ urlpatterns = [
     path('register/', UserRegisterView, name = 'register'),
     path('profile-<str:username>/', ProfileView, name = 'profile'),
     path('profile-<str:username>/edit/', EditProfileView, name = 'profile-edit'),
-    path('create/', PostCreateView.as_view(), name = 'create')
+    path('create/', PostCreateView.as_view(), name = 'create'),
+    path('search/', include('search.urls')),
 ]
 
 if settings.DEBUG:

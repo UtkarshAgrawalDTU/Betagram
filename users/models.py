@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-# Create your models here.
+
 
 class Profile(models.Model):
 
@@ -26,3 +26,14 @@ class Profile(models.Model):
             img.save(self.image.path)
 
 
+class Request(models.Model):
+
+    follower_req = models.ForeignKey(User, on_delete = models.CASCADE, related_name='requests_by_me')
+    following_req = models.ForeignKey(User, on_delete = models.CASCADE, related_name='requests_for_me')
+
+    class Meta:
+        unique_together = ('follower_req', 'following_req',)
+
+    def __str__(self):
+        return f'{self.follower_req.username} ---> {self.following_req.username}'
+    

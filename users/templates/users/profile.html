@@ -9,6 +9,8 @@
 <h2>Posts - {{user.post_set.count}}   Followers - {{user.profile.followers.count}}    Following - {{user.profile.following.count}}</h2>
 <h3>{{user.profile.bio}}</h3>
 
+
+
 {% if request.user == user %}
 <a class="btn btn-secondary btn-lg mt-1 mb-1" href="{% url 'profile-edit' request.user.username %}">Edit</a>
 {% endif %}

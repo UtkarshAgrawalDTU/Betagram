@@ -4,5 +4,5 @@ from .views import NotifView
 app_name = 'notifs'
 
 urlpatterns = [
-    path('', NotifView.as_view(), name = 'notification_page')
+    path('', NotifView, name = 'notification_page')
 ]

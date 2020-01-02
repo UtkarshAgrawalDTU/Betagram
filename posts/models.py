@@ -37,6 +37,9 @@ class LikeonPost(models.Model):
     class Meta:
         unique_together = ('user', 'post',)
 
+    def __str__(self):
+        return f'{self.user} liked {self.post.owner} post'
+    
     def save(self, *args, **kwargs):
        self.post.likecount += 1
        self.post.save()
@@ -51,6 +54,7 @@ class CommentonPost(models.Model):
     date = models.DateTimeField(default = now)
     likecount = models.IntegerField(default=0)
 
-
+    def __str__(self):
+        return f'{self.user} commented on {self.post.owner} post'
 
     

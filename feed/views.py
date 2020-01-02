@@ -5,13 +5,15 @@ from posts.models import Post, LikeonPost, CommentonPost
 from itertools import chain
 from users.models import Profile
 from django.shortcuts import redirect
+from django.utils.timezone import now
+
 # Create your views here.
 
 def FeedView(request):
 
     if not request.user.is_authenticated:
         return render(request, 'betagram/index.html')
-
+    
     profile_following = request.user.profile.following.all()
     posts = Post.objects.filter(owner = request.user)
     following = User.objects.filter(profile__in = profile_following)

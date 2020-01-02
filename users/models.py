@@ -11,7 +11,8 @@ class Profile(models.Model):
     bio = models.TextField(default="", max_length=100)
     image = models.ImageField(upload_to='user_profile_pic', default='default.jpg') 
     following = models.ManyToManyField("self", symmetrical=False, related_name='followers', blank = True)
-    
+
+
     def __str__(self):
         return f'{self.user.username} - Profile'
 
@@ -39,3 +40,15 @@ class Request(models.Model):
     def __str__(self):
         return f'{self.follower_req.username} ---> {self.following_req.username}'
     
+
+class TimeTrack(models.Model):
+    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name='time_track')
+    last_login = models.DateTimeField(default = now)
+
+    def __str__(self):
+        return f'Last login at {self.last_login}'
+
+    def save(self, *args, **kwargs):
+        self.last_login = now()
+        super().save(*args, **kwargs)
+        

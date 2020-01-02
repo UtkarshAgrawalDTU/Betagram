@@ -5,8 +5,50 @@
 <h1>Notifications</h1>
 <br>
 <br>
-{% for notification in notifications %}
 
+{% for notification in new_notifs %}
+
+
+{% if notification.notification_type == 'request' or notification.notification_type == 'req_accept' %}
+
+<a href = "{% url 'profile' notification.action_user.username %}">
+    <img src="{{notification.action_user.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
+
+    {% if notification.notification_type == 'request' %}
+    <h3>{{notification.action_user.username}} sent you a request </h3>
+
+    {% else %}
+    <h3>{{notification.action_user.username}} accepted your follow request </h3>
+
+    {% endif %}
+</a>
+
+{% elif notification.notification_type == 'like' %}
+
+<a href = "{% url 'posts:post_detail' notification.post.id %}">
+    <img src="{{notification.post.image.url}}"  width="50px" height="50px">
+    <h3>{{notification.action_user.username}} liked your post </h3>
+</a>
+
+
+{% else %}
+
+<a href = "{% url 'posts:post_detail' notification.post.id %}">
+    <img src="{{notification.post.image.url}}"  width="50px" height="50px">
+    <h3>{{notification.action_user.username}} commented on your post </h3>
+</a>
+
+{% endif %}
+
+<br>
+
+{% endfor %}
+
+<hr>
+
+<h3>Earlier</h3>
+<br>
+{% for notification in all_notifs %}
 
 {% if notification.notification_type == 'request' or notification.notification_type == 'req_accept' %}
 

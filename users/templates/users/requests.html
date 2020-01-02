@@ -7,7 +7,9 @@
 <br>
 {% for request in requests %}
 
-<h2>{{ request.follower_req.username }} sent you a request </h2>
+<a href="{% url 'profile' request.follower_req.username %}">
+    <h2>{{ request.follower_req.username }} sent you a request </h2>
+</a>
 
 <form method="POST">
     {% csrf_token %}

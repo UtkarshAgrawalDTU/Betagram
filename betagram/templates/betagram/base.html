@@ -11,11 +11,6 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href=""
-    />
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -31,97 +26,96 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
-    <link
-      href="https://fonts.googleapis.com/css?family=Satisfy&display=swap"
-      rel="stylesheet"
-    />
   </head>
-  
+
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'feed:home' %}">Home</a>
-  
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#topNavBar"
-            aria-label="Toggle navigation"
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'feed:home' %}">Home</a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#topNavBar"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="topNavbar">
+        {% if request.user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" href="{% url 'requests' %}"
+              >Requests <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'create' %}"
+              >Create New Post<span class="sr-only">(current)</span></a
+            >
+          </li>
+        </ul>
+        {% endif %} {% if request.user.is_authenticated %}
+
+        <ul class="navbar-nav ml-auto">
+          <form
+            class="form-inline my-2 my-lg-0"
+            method="GET"
+            action="{% url 'search:search_result' %}"
           >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-  
-          <div class="collapse navbar-collapse" id="topNavbar">
-            
-            {% if request.user.is_authenticated %}
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'requests' %}"
-                  >Requests <span class="sr-only">(current)</span></a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'create' %}"
-                  >Create New Post<span class="sr-only">(current)</span></a
-                >
-              </li>
-            </ul>
-            {% endif %}
-  
-  
-            {% if request.user.is_authenticated %}
+            <input
+              name="q"
+              class="form-control mr-sm-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
 
-            <ul class="navbar-nav ml-auto">
-              
-              <form class="form-inline my-2 my-lg-0" method = "GET" action="{% url 'search:search_result' %}">
-                <input name = 'q' class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
-              </form>
-              
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' request.user.username %}"
-                  >Profile<span class="sr-only">(current)</span></a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}"
-                  >Logout<span class="sr-only">(current)</span></a
-                >
-              </li>
-            </ul>
-  
-  
-            {% else %}
-            
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}"
-                  >Login <span class="sr-only">(current)</span></a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'register' %}"
-                  >Register<span class="sr-only">(current)</span></a
-                >
-              </li>
-            </ul>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'profile' request.user.username %}"
+              >Profile<span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}"
+              >Logout<span class="sr-only">(current)</span></a
+            >
+          </li>
+        </ul>
 
-            {% endif %}
-          
-          </div>
-        </div>
-      </nav>  
+        {% else %}
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}"
+              >Login <span class="sr-only">(current)</span></a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}"
+              >Register<span class="sr-only">(current)</span></a
+            >
+          </li>
+        </ul>
+
+        {% endif %}
+      </div>
+    </div>
+  </nav>
 
   <body>
-     <div class="container">
-        <br>
-        <br>
-        <br>
-        <br>
+    <div class="container">
+      <br />
+      <br />
+      <br />
+      <br />
 
-        {% block body %}{% endblock %}
-
-     </div>
-   
+      {% block body %}{% endblock %}
+    </div>
   </body>
 </html>

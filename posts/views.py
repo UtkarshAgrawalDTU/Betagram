@@ -4,7 +4,7 @@ from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
-from .models import LikeonPost
+from .models import LikeonPost, CommentonPost
 # Create your views here.
 
 
@@ -21,17 +21,22 @@ def PostDetailView(request, *args, **kwargs):
     
     if request.method == 'POST':
         
-        if has_liked:
-            obj = LikeonPost.objects.filter(user = request.user, post = post).delete()
-            post.likecount = post.likecount - 1
-            post.save()
-            has_liked = False
+        if 'like' in request.POST:
+            
+            if has_liked:
+                obj = LikeonPost.objects.filter(user = request.user, post = post).delete()
+                post.likecount = post.likecount - 1
+                post.save()
+                has_liked = False
 
-        else:
-            obj = LikeonPost.objects.create(user = request.user, post = post)
-            has_liked = True
+            else:
+                obj = LikeonPost.objects.create(user = request.user, post = post)
+                has_liked = True
+            
+        if 'comment' in request.POST:
+            obj = CommentonPost.objects.create(user = request.user, post = post, comment = request.POST['comment'])
 
-
+    
     return render(request, 'posts/detail.html', {'post' : post, 'has_liked': has_liked})
 
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView
 from django.contrib.auth.models import User
-from posts.models import Post, LikeonComment, LikeonPost, CommentonPost
+from posts.models import Post, LikeonPost, CommentonPost
 from itertools import chain
 from users.models import Profile
 from django.shortcuts import redirect

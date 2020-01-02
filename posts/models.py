@@ -50,17 +50,5 @@ class CommentonPost(models.Model):
     likecount = models.IntegerField(default=0)
 
 
-class LikeonComment(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    comment = models.ForeignKey(CommentonPost, on_delete = models.CASCADE)
-    date = models.DateTimeField(default = now)
-
-    class Meta:
-        unique_together = ('user', 'comment',)
-
-    def save(self, *args, **kwargs):
-       self.comment.likecount += 1
-       self.comment.save()
-       super(LikeonComment, self).save(*args, **kwargs)
 
     

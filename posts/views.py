@@ -1,22 +1,40 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+from .models import LikeonPost
 # Create your views here.
 
 
-class PostDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    model = Post
-    template_name = 'posts/detail.html'
-    context_object_name = 'post'
+@login_required
+def PostDetailView(request, *args, **kwargs):
 
-    def test_func(self):
-        post = self.get_object()
-        follower_find = post.owner.profile.followers.all().filter(user = self.request.user)
-        if self.request.user == post.owner or follower_find.exists() :
-            return True
-        return False
+    post = get_object_or_404(Post, pk = kwargs['pk'])
+    follower_find = post.owner.profile.followers.all().filter(user = request.user)
     
+    if not request.user == post.owner and not follower_find.exists() :
+        return HttpResponseForbidden()
+
+    has_liked = LikeonPost.objects.filter(user = request.user, post = post).exists()
+    
+    if request.method == 'POST':
+        
+        if has_liked:
+            obj = LikeonPost.objects.filter(user = request.user, post = post).delete()
+            post.likecount = post.likecount - 1
+            post.save()
+            has_liked = False
+
+        else:
+            obj = LikeonPost.objects.create(user = request.user, post = post)
+            has_liked = True
+
+
+    return render(request, 'posts/detail.html', {'post' : post, 'has_liked': has_liked})
+
+
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
@@ -56,4 +74,16 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.owner:
             return True
         return False
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -40,8 +40,7 @@ class LikeonPost(models.Model):
     def save(self, *args, **kwargs):
        self.post.likecount += 1
        self.post.save()
-       super(LikeonPost, self).save(*args, **kwargs)
-
+       super().save(*args, **kwargs)
 
 class CommentonPost(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)

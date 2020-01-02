@@ -13,13 +13,13 @@ urlpatterns = [
     path('', include('feed.urls')),
     path('<int:pk>/', include('posts.urls')),
     path('search/', include('search.urls')),
+    path('notifications/', include('notifications.urls')),
     path('profile-<username>/', ProfileView, name = 'profile'),
     path('profile-<username>/followers/', FollowerListView, name = 'follower_list'),
     path('profile-<username>/following/', FollowingListView, name = 'following_list'),
     path('profile-<username>/edit/', EditProfileView, name = 'profile-edit'),
     path('create/', PostCreateView.as_view(), name = 'create'),
     path('requests/', RequestView, name = 'requests'),
-    
 ]
 
 if settings.DEBUG:

@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'search.apps.SearchConfig',
+    'notifications.apps.NotificationsConfig',
     'users.apps.UsersConfig',
     'feed.apps.FeedConfig',
     'posts.apps.PostsConfig',

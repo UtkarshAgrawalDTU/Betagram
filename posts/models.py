@@ -42,6 +42,8 @@ class LikeonPost(models.Model):
        self.post.save()
        super().save(*args, **kwargs)
 
+
+
 class CommentonPost(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     comment = models.TextField(max_length=200)

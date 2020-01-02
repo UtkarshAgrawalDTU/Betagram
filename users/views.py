@@ -9,7 +9,7 @@ from django.views.generic import ListView
 from posts.models import Post
 from .models import Request
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
-
+from notifications.models import Notification
 
 @login_required
 def RequestView(request, **kwargs):
@@ -22,6 +22,7 @@ def RequestView(request, **kwargs):
         if status == 'accept':
             request.user.profile.followers.add(follower.profile)
             Request.objects.get(follower_req = follower, following_req = request.user).delete()
+            Notification.objects.create(concernced_user = follower, action_user = request.user, notification_type = 'req_accept')
 
         if status == 'reject':
             Request.objects.get(follower_req = follower, following_req = request.user).delete()
@@ -67,23 +68,40 @@ def ProfileView(request, **kwargs):
 
         status = request.POST['status']
 
+        if status == 'accept':
+            request.user.profile.followers.add(prof_user.profile)
+            Request.objects.get(follower_req = prof_user, following_req = request.user).delete()
+            Notification.objects.create(concerned_user = prof_user, action_user = request.user, notification_type = 'req_accept')
+
+
+        if status == 'reject':
+            Request.objects.get(follower_req = prof_user, following_req = request.user).delete()
+
+
         if status == 'follow':
             Request.objects.create(follower_req = request.user, following_req = prof_user)
+            Notification.objects.create(concerned_user = prof_user, action_user = request.user, notification_type = 'request')
+
 
         if status == 'unfollow':
             request.user.profile.following.remove(prof_user.profile)
 
+
         if status == 'unfollowed':
             request.user.profile.followers.remove(prof_user.profile)
-        
+
+
         if status == 'remove_request':
             Request.objects.filter(follower_req = request.user, following_req = prof_user).delete()
+            Notification.objects.filter(concerned_user = prof_user, action_user = request.user, notification_type = 'request').delete()
+
+
 
     is_following = request.user.profile.following.all().filter(user = prof_user).exists()
     is_followed = request.user.profile.followers.all().filter(user = prof_user).exists()
     request_sent = Request.objects.filter(follower_req = request.user, following_req = prof_user).exists()
-
-    return render(request, 'users/profile.html', {'user': prof_user, 'is_following' : is_following, 'is_followed' : is_followed, 'request_sent' : request_sent})
+    accept_req = Request.objects.filter(follower_req = prof_user, following_req = request.user).exists()
+    return render(request, 'users/profile.html', {'user': prof_user, 'is_following' : is_following, 'is_followed' : is_followed, 'request_sent' : request_sent, 'accept_request' : accept_req})
 
 
 

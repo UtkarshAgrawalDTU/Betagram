@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from .models import LikeonPost, CommentonPost
+from notifications.models import Notification
 # Create your views here.
 
 
@@ -26,17 +27,20 @@ def PostDetailView(request, *args, **kwargs):
             if has_liked:
                 obj = LikeonPost.objects.filter(user = request.user, post = post).delete()
                 post.likecount = post.likecount - 1
+                Notification.objects.filter(concerned_user = post.owner, action_user = request.user, notification_type = 'like', post = post).delete()
                 post.save()
                 has_liked = False
 
             else:
                 obj = LikeonPost.objects.create(user = request.user, post = post)
+                Notification.objects.create(concerned_user = post.owner, action_user = request.user, notification_type = 'like', post = post)
                 has_liked = True
             
         if 'comment' in request.POST:
             obj = CommentonPost.objects.create(user = request.user, post = post, comment = request.POST['comment'])
+            Notification.objects.create(concerned_user = post.owner, action_user = request.user, notification_type = 'comment', post = post)
 
-    
+
     return render(request, 'posts/detail.html', {'post' : post, 'has_liked': has_liked})
 
 

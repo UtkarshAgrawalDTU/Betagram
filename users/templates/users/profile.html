@@ -2,6 +2,31 @@
 {% load crispy_forms_tags %}
 
 {% block body %}
+
+
+{% if accept_request %}
+
+<h2>{{ user.username }} sent you a request </h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="accept">
+    <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
+</form>
+
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="status" value="reject">
+    <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
+</form>
+
+<br>
+
+{% endif %}
+
+
+
 <h1>Profile</h1>
 <img src="{{user.profile.image.url}}">
 <h2>{{user.username}}</h2>
@@ -31,6 +56,12 @@
     
 {% endif %}
 <h3>{{user.profile.bio}}</h3>
+
+
+
+
+
+
 
 
 

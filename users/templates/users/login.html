@@ -11,6 +11,9 @@
     {% csrf_token %}
     {{form|crispy}}
 <button type="submit">Submit</button>
+<small class="text-muted ml-2">
+    <a href="{% url 'password_reset' %}">Forgot Password?</a>
+</small>
 </form>
 
 {% endif %}

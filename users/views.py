@@ -10,6 +10,7 @@ from posts.models import Post
 from .models import Request
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from notifications.models import Notification
+from django.contrib.auth import views
 
 @login_required
 def RequestView(request, **kwargs):
@@ -178,4 +179,15 @@ def FollowingListView(request, **kwargs):
     return render(request, 'users/following_list.html', {'following_list': object_list})
 
 
-        
+
+class PasswordResetView(views.PasswordResetView):
+    template_name = 'users/password_reset.html'
+
+class PasswordResetCompleteView(views.PasswordResetCompleteView):
+    template_name = 'users/password_reset_complete.html'
+
+class PasswordResetDoneView(views.PasswordResetDoneView):
+    template_name = 'users/password_reset_done.html'
+
+class PasswordResetConfirmView(views.PasswordResetConfirmView):
+    template_name = 'users/password_reset_confirm.html'

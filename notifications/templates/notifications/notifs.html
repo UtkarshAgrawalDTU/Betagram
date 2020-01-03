@@ -1,10 +1,17 @@
 {% extends 'betagram/base.html' %}
 
 {% block body %}
+<br>
+<a href="{% url 'requests' %}">
+    <h2>Follow Requests</h2>   
+    <br>
+</a>
+<hr>
+<br>
 
 <h1>Notifications</h1>
 <br>
-<br>
+
 
 {% for notification in new_notifs %}
 
@@ -15,7 +22,7 @@
     <img src="{{notification.action_user.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
 
     {% if notification.notification_type == 'request' %}
-    <h3>{{notification.action_user.username}} sent you a request </h3>
+    <h3>{{notification.action_user.username}} wants to follow you </h3>
 
     {% else %}
     <h3>{{notification.action_user.username}} accepted your follow request </h3>
@@ -56,7 +63,7 @@
     <img src="{{notification.action_user.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
 
     {% if notification.notification_type == 'request' %}
-    <h3>{{notification.action_user.username}} sent you a request </h3>
+    <h3>{{notification.action_user.username}} wants to follow you </h3>
 
     {% else %}
     <h3>{{notification.action_user.username}} accepted your follow request </h3>

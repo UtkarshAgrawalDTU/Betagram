@@ -5,32 +5,44 @@
 <h1>Requests</h1>
 <br>
 <br>
-{% for request in requests %}
 
-<a href="{% url 'profile' request.follower_req.username %}">
-    <h2>{{ request.follower_req.username }} sent you a request </h2>
-</a>
-
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="follower" value="{{request.follower_req.username}}">
-    <input type="hidden" name="status" value="accept">
-    <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
-</form>
-
-
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="follower" value="{{request.follower_req.username}}">
-    <input type="hidden" name="status" value="reject">
-    <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
-</form>
-
-<br>
-
-{% endfor %}
-
-{% if requests.count == 0 %}
-<h3>No requests</h3>
+{% if requests.object_list.count == 0 %}
+    <h3>No requests</h3>
 {% endif %}
+
+<div class="infinite-container">
+    {% for request in requests %}
+
+      <div class="infinite-item">
+        <a href="{% url 'profile' request.follower_req.username %}">
+            <h2>{{ request.follower_req.username }} wants to follow you </h2>
+        </a>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="follower" value="{{request.follower_req.username}}">
+            <input type="hidden" name="status" value="accept">
+            <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
+        </form>
+
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="follower" value="{{request.follower_req.username}}">
+            <input type="hidden" name="status" value="reject">
+            <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
+        </form>
+      </div>
+    
+    {% endfor %}
+</div>
+
+
+{% if requests.has_next %}
+  <div class="loading">
+    <h4><a class="infinite-more-link" href="?page={{requests.next_page_number}}">More</a></h4>
+  </div>
+{% endif %}
+
+
+
 {% endblock %}

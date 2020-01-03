@@ -5,6 +5,22 @@
 
     {% load static %}
 
+    <style type="text/css">
+      body {
+        margin: 0 auto;
+      }
+      .infinite-item, .loading {
+        margin-bottom: 5px;
+        padding: 25px 0;
+      }
+      .loading {
+        background-color: #333;
+        color: aliceblue;
+      }
+      a.infinite-more-link{
+        color: aliceblue;
+      }
+    </style>
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -26,6 +42,8 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
   </head>
 
   <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
@@ -119,5 +137,18 @@
 
       {% block body %}{% endblock %}
     </div>
+
+
+<script>
+  var infinite = new Waypoint.Infinite({
+    element: $('.infinite-container')[0],
+    onBeforePageLoad: function () {
+      $('.loading').show();
+    },
+    onAfterPageLoad: function ($items) {
+      $('.loading').hide();
+    }
+  });
+</script>
   </body>
 </html>

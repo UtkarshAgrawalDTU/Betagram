@@ -11,6 +11,8 @@ from .models import Request
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from notifications.models import Notification
 from django.contrib.auth import views
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 @login_required
 def RequestView(request, **kwargs):
@@ -29,7 +31,18 @@ def RequestView(request, **kwargs):
             Request.objects.get(follower_req = follower, following_req = request.user).delete()
 
     object_list = request.user.requests_for_me.all().order_by('-date')
-    return render(request, 'users/requests.html', {'requests': object_list})
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(object_list, 10)    
+    
+    try:
+        requests = paginator.page(page)
+    except PageNotAnInteger:
+        requests = paginator.page(1)
+    except EmptyPage:
+        requests = paginator.page(paginator.num_pages)
+
+    return render(request, 'users/requests.html', {'requests': requests})
 
 
 class UserLoginView(LoginView):
@@ -97,12 +110,23 @@ def ProfileView(request, **kwargs):
             Notification.objects.filter(concerned_user = prof_user, action_user = request.user, notification_type = 'request').delete()
 
 
+    posts_set = Post.objects.filter(owner = request.user).order_by('-date')
+    page = request.GET.get('page', 1)
+    paginator = Paginator(posts_set, 20)    
+    
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
 
     is_following = request.user.profile.following.all().filter(user = prof_user).exists()
     is_followed = request.user.profile.followers.all().filter(user = prof_user).exists()
     request_sent = Request.objects.filter(follower_req = request.user, following_req = prof_user).exists()
     accept_req = Request.objects.filter(follower_req = prof_user, following_req = request.user).exists()
-    return render(request, 'users/profile.html', {'user': prof_user, 'is_following' : is_following, 'is_followed' : is_followed, 'request_sent' : request_sent, 'accept_request' : accept_req})
+    return render(request, 'users/profile.html', {'user': prof_user, 'is_following' : is_following, 'is_followed' : is_followed, 'request_sent' : request_sent, 'accept_request' : accept_req, 'posts':posts})
 
 
 

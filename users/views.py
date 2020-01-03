@@ -50,7 +50,7 @@ class UserLoginView(LoginView):
 
 
 class UserLogoutView(LogoutView):
-    template_name = 'users/index.html'
+    template_name = 'feed/index.html'
 
 
 def UserRegisterView(request, *args, **kwargs):

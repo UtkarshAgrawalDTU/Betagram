@@ -5,112 +5,64 @@
 
     {% load static %}
 
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'common/style.css' %}"
-    />
-
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-      crossorigin="anonymous"
-    />
-
-    <script
-      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"
-    ></script>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
-    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
+    {% block load_css %}{% endblock %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
   </head>
 
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="{% url 'feed:home' %}">Home</a>
 
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#topNavBar"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
+  
+  <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+      
+      <a class="navbar-brand" href="{% url 'feed:home' %}">
+          <img src="{% static 'images/logo.ico' %}" width="40" height="40" alt="">
+        </a>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#topNavBar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="topNavbar">
+      <div class="collapse navbar-collapse" id="topNavBar">
+        
         {% if request.user.is_authenticated %}
+        
         <ul class="navbar-nav mr-auto">
 
           <li class="nav-item ">
-            <a class="nav-link" href="{% url 'notifs:notification_page' %}"
-              >Notifications {% block has_notif %}{% endblock %}<span class="sr-only">(current)</span></a
-            >
+            <a class="nav-link" href="{% url 'notifs:notification_page' %}">
+              Notifications<span class="sr-only">(current)</span>
+            </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'create' %}"
-              >Create New Post<span class="sr-only">(current)</span></a
-            >
+            <a class="nav-link" href="{% url 'create' %}">
+              Create New Post<span class="sr-only">(current)</span>
+            </a>
           </li>
+        
         </ul>
-        {% endif %} {% if request.user.is_authenticated %}
+        {% endif %} 
+        
+        
+        {% if request.user.is_authenticated %}
 
         <ul class="navbar-nav ml-auto">
-          <form
-            class="form-inline my-2 my-lg-0"
-            method="GET"
-            action="{% url 'search:search_result' %}"
-          >
-            <input
-              name="q"
-              class="form-control mr-sm-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">
-              Search
-            </button>
+          
+          <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search:search_result' %}">
+            <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
+            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
           </form>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' request.user.username %}"
-              >Profile<span class="sr-only">(current)</span></a
-            >
+            <a class="nav-link" href="{% url 'profile' request.user.username %}">
+              Profile<span class="sr-only">(current)</span>
+            </a>
           </li>
+          
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}"
-              >Logout<span class="sr-only">(current)</span></a
-            >
-          </li>
-        </ul>
-
-        {% else %}
-
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}"
-              >Login <span class="sr-only">(current)</span></a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}"
-              >Register<span class="sr-only">(current)</span></a
-            >
+            <a class="nav-link" href="{% url 'logout' %}">
+              Logout<span class="sr-only">(current)</span>
+            </a>
           </li>
         </ul>
 
@@ -119,16 +71,25 @@
     </div>
   </nav>
 
+
+
+
   <body>
     <div class="container">
-      <br />
-      <br />
-      <br />
-      <br />
-
+      <br>
+      <br>
+      <br>
+      <br>
       {% block body %}{% endblock %}
     </div>
 
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src = "{% static 'js/jquery.waypoints.min.js' %}"></script>
+<script src = "{% static 'js/infinite.min.js' %}"></script>
 
 <script>
   var infinite = new Waypoint.Infinite({
@@ -141,5 +102,10 @@
     }
   });
 </script>
-  </body>
+
+
+
+
+
+</body>
 </html>

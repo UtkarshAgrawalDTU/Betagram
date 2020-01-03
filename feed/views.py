@@ -11,7 +11,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def FeedView(request):
 
     if not request.user.is_authenticated:
-        return render(request, 'index.html')
+        return render(request, 'feed/index.html')
     
 
     profile_following = request.user.profile.following.all()
@@ -30,6 +30,6 @@ def FeedView(request):
         posts = paginator.page(paginator.num_pages)
 
     context = {'posts' : posts}
-    return render(request, 'index.html', context)
+    return render(request, 'feed/index.html', context)
 
 

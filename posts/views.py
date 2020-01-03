@@ -41,14 +41,14 @@ def PostDetailView(request, *args, **kwargs):
             Notification.objects.create(concerned_user = post.owner, action_user = request.user, notification_type = 'comment', post = post)
 
 
-    return render(request, 'detail.html', {'post' : post, 'has_liked': has_liked})
+    return render(request, 'posts/detail.html', {'post' : post, 'has_liked': has_liked})
 
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['image', 'caption']
-    template_name = 'post_form.html'
+    template_name = 'posts/post_form.html'
 
     def form_valid(self, form):
         form.instance.owner = self.request.user     
@@ -58,7 +58,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['image', 'caption']
-    template_name = 'post_form.html'
+    template_name = 'posts/post_form.html'
 
     def form_valid(self, form):
         
@@ -75,7 +75,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     context_object_name = 'post'
-    template_name = 'post_delete_confirm.html'
+    template_name = 'posts/post_delete_confirm.html'
     success_url = '/'
 
     def  test_func(self):

@@ -42,15 +42,15 @@ def RequestView(request, **kwargs):
     except EmptyPage:
         requests = paginator.page(paginator.num_pages)
 
-    return render(request, 'users/requests.html', {'requests': requests})
+    return render(request, 'requests.html', {'requests': requests})
 
 
 class UserLoginView(LoginView):
-    template_name = 'users/login.html'
+    template_name = 'login.html'
 
 
 class UserLogoutView(LogoutView):
-    template_name = 'betagram/index.html'
+    template_name = 'index.html'
 
 
 def UserRegisterView(request, *args, **kwargs):
@@ -67,7 +67,7 @@ def UserRegisterView(request, *args, **kwargs):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'register.html', {'form': form})
 
 
 
@@ -126,7 +126,7 @@ def ProfileView(request, **kwargs):
     is_followed = request.user.profile.followers.all().filter(user = prof_user).exists()
     request_sent = Request.objects.filter(follower_req = request.user, following_req = prof_user).exists()
     accept_req = Request.objects.filter(follower_req = prof_user, following_req = request.user).exists()
-    return render(request, 'users/profile.html', {'user': prof_user, 'is_following' : is_following, 'is_followed' : is_followed, 'request_sent' : request_sent, 'accept_request' : accept_req, 'posts':posts})
+    return render(request, 'profile.html', {'user': prof_user, 'is_following' : is_following, 'is_followed' : is_followed, 'request_sent' : request_sent, 'accept_request' : accept_req, 'posts':posts})
 
 
 
@@ -156,7 +156,7 @@ def EditProfileView(request, **kwargs):
         p_form = ProfileUpdateForm(instance= request.user.profile)
 
     context = {'u_form' : u_form, 'p_form' : p_form, 'user' : user}
-    return render(request, 'users/profile_form.html', context)
+    return render(request, 'profile_form.html', context)
 
 
 
@@ -178,7 +178,7 @@ def FollowerListView(request, **kwargs):
         if status == 'unfollowed':
             user.profile.followers.remove(follower.profile)
 
-    return render(request, 'users/follower_list.html', {'followers': object_list})
+    return render(request, 'follower_list.html', {'followers': object_list})
 
 
 
@@ -200,18 +200,18 @@ def FollowingListView(request, **kwargs):
         if status == 'unfollow':
             user.profile.following.remove(following.profile)
 
-    return render(request, 'users/following_list.html', {'following_list': object_list})
+    return render(request, 'following_list.html', {'following_list': object_list})
 
 
 
 class PasswordResetView(views.PasswordResetView):
-    template_name = 'users/password_reset.html'
+    template_name = 'password_reset.html'
 
 class PasswordResetCompleteView(views.PasswordResetCompleteView):
-    template_name = 'users/password_reset_complete.html'
+    template_name = 'password_reset_complete.html'
 
 class PasswordResetDoneView(views.PasswordResetDoneView):
-    template_name = 'users/password_reset_done.html'
+    template_name = 'password_reset_done.html'
 
 class PasswordResetConfirmView(views.PasswordResetConfirmView):
-    template_name = 'users/password_reset_confirm.html'
+    template_name = 'password_reset_confirm.html'

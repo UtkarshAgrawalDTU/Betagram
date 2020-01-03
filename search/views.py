@@ -8,7 +8,7 @@ from django.db.models import Q
 
 class SearchResultView(LoginRequiredMixin, ListView):
     model = User
-    template_name = 'search/search_results.html'
+    template_name = 'search_results.html'
     context_object_name = 'user'
 
     def get_queryset(self):

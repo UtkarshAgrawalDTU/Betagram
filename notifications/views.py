@@ -27,5 +27,5 @@ def NotifView(request):
 
     
     
-    return render(request, 'notifications/notifs.html', {'new_notifs': new_notifs, 'old_notifs' : old_notifs})
+    return render(request, 'notifs.html', {'new_notifs': new_notifs, 'old_notifs' : old_notifs})
 

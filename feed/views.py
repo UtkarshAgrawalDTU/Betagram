@@ -1,18 +1,17 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.contrib.auth.models import User
 from posts.models import Post, LikeonPost, CommentonPost
 from itertools import chain
 from users.models import Profile
-from django.shortcuts import redirect
 from django.utils.timezone import now
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-# Create your views here.
+
 
 def FeedView(request):
 
     if not request.user.is_authenticated:
-        return render(request, 'betagram/index.html')
+        return render(request, 'index.html')
     
 
     profile_following = request.user.profile.following.all()
@@ -21,7 +20,7 @@ def FeedView(request):
     posts_list = posts.union(Post.objects.filter(owner__in = following)).order_by('-date')
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(posts_list, 10)    
+    paginator = Paginator(posts_list, 2)    
     
     try:
         posts = paginator.page(page)
@@ -31,6 +30,6 @@ def FeedView(request):
         posts = paginator.page(paginator.num_pages)
 
     context = {'posts' : posts}
-    return render(request, 'betagram/index.html', context)
+    return render(request, 'index.html', context)
 
 

@@ -8,6 +8,12 @@
     {% block load_css %}{% endblock %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
     <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+    crossorigin="anonymous"
+  />
   </head>
 
 
@@ -65,6 +71,34 @@
             </a>
           </li>
         </ul>
+
+        {% else %}
+
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <span class="fa-stack fa-2x icon">
+              <a href="https://www.linkedin.com/in/utkarsh-agrawal-622b5b16b/" target="_blank">
+                <i class="fab fa-linkedin-in fa-stack-1x"></i>
+              </a>
+            </span>
+          </li>
+        
+          <li class="nav-item">
+            <span class="fa-stack fa-2x icon">
+              <a href="https://github.com/UtkarshAgrawalDTU/" target="_blank">
+                <i class="fab fa-github fa-stack-1x"></i>
+              </a>
+            </span>
+          </li>
+      
+          <li class="nav-item">
+            <span class="icon fa-stack fa-2x icon">
+              <a href="mailto:agrawal.utkarsh8@gmail.com" target="_blank">
+                <i class="far fa-envelope fa-stack-1x"></i>
+              </a>
+            </span>
+          </li>
+          </ul>
 
         {% endif %}
       </div>

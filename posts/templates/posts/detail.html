@@ -10,8 +10,7 @@
     <div class="row">
       <div class="infinite-item mx-auto col-lg-12 col-xs-12" style="object-fit: contain; border: 1px solid aquamarine; background-color: white;">
         
-        
-          <div class="row mx-auto" style="max-width: 800px; height: 70px;">
+          <div class="row mx-auto" style="max-width: 800px; height: 60px;">
             
             <img src="{{post.owner.profile.image.url}}" class = "rounded-circle mx-3" width="50px" height="50px">
             <a href = "{% url 'profile' post.owner.username %}">  
@@ -51,11 +50,9 @@
         </div>
     
         <div class="row mx-auto" style="max-width: 800px;">
-          <h2 style="color: black;">{{post.caption}}</h2>
+          <h2 style="color: black; font-size: 25px;">{{post.caption}}</h2>
         </div>
-    
-    
-    
+
       </div>
     </div>
 
@@ -74,15 +71,11 @@
 
     {% if post.commentonpost_set.all%}
     
-    
     {% for comment in post.commentonpost_set.all %}
-        
-
         <div class="row" style="max-width: 800px; height: 70px;">
             <img src="{{comment.user.profile.image.url}}" class = "rounded-circle mx-3" width="40px" height="40px">
             <h4 class="pt-1">{{comment.user.username}} - {{comment.comment}}</h4>
           </div>
-
     {% endfor %}
     
     {% endif %}

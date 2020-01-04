@@ -20,7 +20,7 @@ def FeedView(request):
     posts_list = posts.union(Post.objects.filter(owner__in = following)).order_by('-date')
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(posts_list, 2)    
+    paginator = Paginator(posts_list, 5)    
     
     try:
         posts = paginator.page(page)

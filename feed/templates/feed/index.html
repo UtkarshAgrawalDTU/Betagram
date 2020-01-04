@@ -23,11 +23,11 @@
       </div>
     </a>
     
+    <a href = "{{ post.get_absolute_url }}">
     <div class="image mx-auto">
-      <a href = "{{ post.get_absolute_url }}">
         <img src="{{post.image.url}}" class="post">
-      </a>
     </div>
+  </a>
     
     <div class="row mx-auto my-2" style="max-width: 800px; ">
       <h2 style="color: black;">{{post.likecount}} likes</h2>

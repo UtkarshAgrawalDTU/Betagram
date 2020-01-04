@@ -4,24 +4,44 @@
 {% block load_css %}
 <link rel="stylesheet" href="{% static 'feed/style.css' %}">
 {% endblock %}
+
+
 {% block body %}
 
 {% if request.user.is_authenticated %}
 
-<h1>Feed</h1>
-
 <div class="infinite-container">
-    {% for post in posts %}
-      <div class="infinite-item">
-        <a href = "{% url 'profile' post.owner.username %}">
-            <img src="{{post.owner.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
-            <h3>{{post.owner.username}}</h3>
-        </a>
-        <a href = "{{ post.get_absolute_url }}"><img src="{{post.image.url}}"></a>
-        <h2>{{post.likecount}}</h2>
-        <h3>{{post.caption}}</h3>
+<div class="row">
+  {% for post in posts %}
+
+  <div class="infinite-item mx-auto col-lg-12 col-xs-12" style="object-fit: contain; border: 1px solid aquamarine; background-color: white;">
+    
+    <a href = "{% url 'profile' post.owner.username %}">
+      <div class="row mx-auto" style="max-width: 800px; height: 70px;">
+        <img src="{{post.owner.profile.image.url}}" class = "rounded-circle mx-3" width="50px" height="50px">
+          <h3 style="float:inline-start;" class="pt-1">{{post.owner.username}}</h3>
       </div>
-    {% endfor %}
+    </a>
+    
+    <div class="image mx-auto">
+      <a href = "{{ post.get_absolute_url }}">
+        <img src="{{post.image.url}}" class="post">
+      </a>
+    </div>
+    
+    <div class="row mx-auto my-2" style="max-width: 800px; ">
+      <h2 style="color: black;">{{post.likecount}} likes</h2>
+    </div>
+
+    <div class="row mx-auto" style="max-width: 800px;">
+      <h2 style="color: black;">{{post.caption}}</h2>
+    </div>
+
+
+
+  </div>
+{% endfor %}
+</div>
 </div>
 
 

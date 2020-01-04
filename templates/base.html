@@ -21,7 +21,7 @@
   <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
     <div class="container-fluid">
       
-      <a class="navbar-brand" href="{% url 'feed:home' %}">
+      <a class="navbar-brand pr-5" href="{% url 'feed:home' %}">
           <img src="{% static 'images/logo.ico' %}" width="40" height="40" alt="">
         </a>
       <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#topNavBar" aria-label="Toggle navigation">
@@ -34,42 +34,56 @@
         
         <ul class="navbar-nav mr-auto">
 
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'notifs:notification_page' %}">
-              Notifications<span class="sr-only">(current)</span>
-            </a>
+          <li class="nav-item mx-3">
+            <span class="fa-stack fa-2x icon">
+              <a href="{% url 'create' %}">
+                <i class="far fa-plus-square"></i>
+              </a>
+            </span>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'create' %}">
-              Create New Post<span class="sr-only">(current)</span>
-            </a>
+          <li class="nav-item mx-3">
+            <span class="fa-stack fa-2x icon">
+              <a href="{% url 'notifs:notification_page' %}">
+                <i class="far fa-bell"></i>
+              </a>
+            </span>
           </li>
-        
+
         </ul>
+
         {% endif %} 
         
         
         {% if request.user.is_authenticated %}
 
-        <ul class="navbar-nav ml-auto">
-          
-          <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search:search_result' %}">
+          <form class="form-inline my-2 my-lg-0 ml-auto mr-4" method="GET" action="{% url 'search:search_result' %}">
             <input name="q" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+            <button type="submit">
+              <span class="fa-stack icon">
+                <i class="fas fa-search"></i>
+              </span>
+            </button>
           </form>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'profile' request.user.username %}">
-              Profile<span class="sr-only">(current)</span>
-            </a>
+          <ul class="navbar-nav">
+
+          <li class="nav-item mx-2 ml-2">
+            <span class="fa-stack fa-2x icon">
+              <a href="{% url 'profile' request.user.username %}">
+                <i class="far fa-user"></i>
+              </a>
+            </span>
           </li>
-          
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">
-              Logout<span class="sr-only">(current)</span>
-            </a>
+
+          <li class="nav-item mx-2">
+            <span class="fa-stack fa-2x icon">
+              <a href="{% url 'logout' %}">
+                <i class="fa fa-sign-out-alt"></i>
+              </a>
+            </span>
           </li>
+
         </ul>
 
         {% else %}

@@ -1,43 +1,87 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block title %}Betagram {% endblock %}
+{% block load_css %}
+<link rel="stylesheet" href="{% static 'feed/style.css' %}">
+{% endblock %}
+
 
 {% block body %}
-
-    <span>
-        <a href = "{% url 'profile' post.owner.username %}">
-        <img src="{{post.owner.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
-        <h3>{{post.owner.username}}</h3>
-        </a>
-    </span>
+    <div class="row">
+      <div class="infinite-item mx-auto col-lg-12 col-xs-12" style="object-fit: contain; border: 1px solid aquamarine; background-color: white;">
+        
+        
+          <div class="row mx-auto" style="max-width: 800px; height: 70px;">
+            
+            <img src="{{post.owner.profile.image.url}}" class = "rounded-circle mx-3" width="50px" height="50px">
+            <a href = "{% url 'profile' post.owner.username %}">  
+                <h3 style="float:inline-start;" class="pt-1">{{post.owner.username}}</h3>
+            </a>
+              
+            <div class="btn-group ml-auto">
+                <button class="btn btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-cog"></i>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'posts:post_update' post.id %}">Update</a>
+                    <a class="dropdown-item btn btn-danger btn-sm mt-1 mb-1" href="{% url 'posts:post_delete' post.id %}">Delete</a>
+                </div>
+              </div>
+          </div>
     
-    <img src="{{post.image.url}}" >
-    <h3>Likes - {{post.likecount}}</h3>
-    <h3>{{post.caption}}</h3>
-    <br>
-    <form method="POST" name = "like">
-        {% csrf_token %}
+        <div class="image mx-auto">
+          <a href = "{{ post.get_absolute_url }}">
+            <img src="{{post.image.url}}" class="post">
+          </a>
+        </div>
+        
+        <div class="row mx-auto my-2" style="max-width: 800px; ">
+            <form  class = "mr-3" method="POST" name = "like">
+                {% csrf_token %}
+        
+                {% if has_liked %}
+                <button class="btn btn-danger btn-md mt-1 mb-1" type="submit" name="like"><i class="fas fa-heart"></i></button>
+                {% else %}
+                    <button class="btn btn-outline-secondary btn-md mt-1 mb-1" type="submit" name="like"><i class="far fa-heart"></i></button>
+                {% endif %}
+        
+            </form>
 
-        {% if has_liked %}
-            <button class="btn btn-danger btn-md mt-1 mb-1" type="submit" name="like">Unlike</button>
-        {% else %}
-            <button class="btn btn-danger btn-md mt-1 mb-1" type="submit" name="like">Like</button>
-        {% endif %}
+          <h2 style="color: black;">{{post.likecount}} likes</h2>
+        </div>
+    
+        <div class="row mx-auto" style="max-width: 800px;">
+          <h2 style="color: black;">{{post.caption}}</h2>
+        </div>
+    
+    
+    
+      </div>
+    </div>
 
-    </form>
-    <br>
-    <br>
+    
     
     <h3>Comments</h3>
-
-    <form method="POST" name = "comment">
+    <form class="mb-3" method="POST" name = "comment">
         {% csrf_token %}
-        <input class="form-control form-control-lg" type="text" placeholder="Your comment here" name="comment">
-        <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Comment</button> 
-    </form>
+        <input class="form-control" type="text" placeholder="Your comment here" name="comment">
+        <button class="btn btn-outline-success btn-md mt-1 mb-1" type="submit">
+         <i class="far fa-paper-plane"></i>
+        </button> 
+    </form>   
+
+    
 
     {% if post.commentonpost_set.all%}
     
+    
     {% for comment in post.commentonpost_set.all %}
-        <h4>{{comment.user.username}} - {{comment.comment}}</h4>
+        
+
+        <div class="row" style="max-width: 800px; height: 70px;">
+            <img src="{{comment.user.profile.image.url}}" class = "rounded-circle mx-3" width="40px" height="40px">
+            <h4 class="pt-1">{{comment.user.username}} - {{comment.comment}}</h4>
+          </div>
 
     {% endfor %}
     
@@ -49,8 +93,7 @@
     <h5>{{post.date}}</h5>
     {% if post.owner == request.user %}
     <div>
-        <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'posts:post_update' post.id %}">Update</a>
-        <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'posts:post_delete' post.id %}">Delete</a>
+       
     </div>
     {% endif %}
 

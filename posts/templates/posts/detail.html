@@ -16,7 +16,8 @@
             <a href = "{% url 'profile' post.owner.username %}">  
                 <h3 style="float:inline-start;" class="pt-1">{{post.owner.username}}</h3>
             </a>
-              
+            
+            {% if post.owner == request.user %}
             <div class="btn-group ml-auto">
                 <button class="btn btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-cog"></i>
@@ -25,7 +26,8 @@
                     <a class="dropdown-item btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'posts:post_update' post.id %}">Update</a>
                     <a class="dropdown-item btn btn-danger btn-sm mt-1 mb-1" href="{% url 'posts:post_delete' post.id %}">Delete</a>
                 </div>
-              </div>
+            </div>
+            {% endif %}
           </div>
     
         <div class="image mx-auto">
@@ -79,16 +81,5 @@
     {% endfor %}
     
     {% endif %}
-
-    <br>
-    <br>
-
-    <h5>{{post.date}}</h5>
-    {% if post.owner == request.user %}
-    <div>
-       
-    </div>
-    {% endif %}
-
 
 {% endblock %}

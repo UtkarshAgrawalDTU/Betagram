@@ -6,3 +6,5 @@ Pillow==7.0.0
 python-decouple==3.3
 pytz==2019.3
 sqlparse==0.3.0
+boto3==1.9.96
+django-storages==1.8

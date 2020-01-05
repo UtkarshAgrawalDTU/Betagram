@@ -16,7 +16,7 @@ def NotifView(request):
     request.user.time_track.save()
     
     page = request.GET.get('page', 1)
-    paginator = Paginator(all_notifs, 7)    
+    paginator = Paginator(all_notifs, 5)    
     
     try:
         old_notifs = paginator.page(page)
@@ -25,7 +25,5 @@ def NotifView(request):
     except EmptyPage:
         old_notifs = paginator.page(paginator.num_pages)
 
-    
-    
     return render(request, 'notifications/notifs.html', {'new_notifs': new_notifs, 'old_notifs' : old_notifs})
 

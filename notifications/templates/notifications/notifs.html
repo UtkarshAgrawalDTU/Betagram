@@ -5,16 +5,17 @@
 
 <br>
 <a href="{% url 'requests' %}">
-    <h2>Follow Requests</h2>   
+    <div class="row" style="max-width: 800px; height: 30px;">
+        <img src="/media/default.jpg" class = "rounded-circle mx-4" width="50px" height="50px">
+        <h2 class="pt-1">Follow Requests</h2>   
+    </div>
     <br>
 </a>
 <hr>
 <br>
 
 
-
-
-<h1>Notifications</h1>
+<h2>Notifications</h2>
 <br>
 
 {% if new_notifs.count == 0 %}
@@ -28,33 +29,45 @@
     {% if notification.notification_type == 'request' or notification.notification_type == 'req_accept' %}
 
         <a href = "{% url 'profile' notification.action_user.username %}">
-            <img src="{{notification.action_user.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
+            <div class="row" style="max-width: 800px; height: 60px;">
+                <img src="{{notification.action_user.profile.image.url}}" class = "rounded-circle mx-4" width="50px" height="50px">
 
-            {% if notification.notification_type == 'request' %}
-            <h3>{{notification.action_user.username}} wants to follow you </h3>
-
-            {% else %}
-            <h3>{{notification.action_user.username}} accepted your follow request </h3>
-
-            {% endif %}
+                {% if notification.notification_type == 'request' %}
+                <h3 class="pt-1">{{notification.action_user.username}} wants to follow you </h3>
+    
+                {% else %}
+                <h3 class="pt-1">{{notification.action_user.username}} accepted your follow request </h3>
+    
+                {% endif %}
+            </div>
         </a>
 
 
 
-    {% elif notification.notification_type == 'like' %}
+    {% elif notification.notification_type == 'like' and not notification.action_user == request.user %}
 
-        <a href = "{% url 'posts:post_detail' notification.post.id %}">
-            <img src="{{notification.post.image.url}}"  width="50px" height="50px">
-            <h3>{{notification.action_user.username}} liked your post </h3>
-        </a>
+    <a href = "{% url 'posts:post_detail' notification.post.id %}">
+      <div class="row" style="max-width: 800px; height: 30px;">
+        <img src="{{notification.post.image.url}}" class="mx-4" width="50px" height="50px">
+        <h3 class="pt-1">{{notification.action_user.username}} liked your post </h3>
+      </div>
+    </a>
 
 
     {% else %}
+    
+    {% if not notification.action_user == request.user %}
 
-        <a href = "{% url 'posts:post_detail' notification.post.id %}">
-            <img src="{{notification.post.image.url}}"  width="50px" height="50px">
-            <h3>{{notification.action_user.username}} commented on your post </h3>
-        </a>
+
+    <a href = "{% url 'posts:post_detail' notification.post.id %}">
+    <div class="row" style="max-width: 800px; height: 30px;">
+            <img src="{{notification.post.image.url}}" class="mx-4" width="50px" height="50px">
+            <h3 class="pt-1">{{notification.action_user.username}} commented on your post </h3>
+       
+    </div>
+    </a>
+       
+    {% endif %}
 
     {% endif %}
 
@@ -68,10 +81,7 @@
 <hr>
 
 
-
-
-
-<h3>Earlier</h3>
+<h3 class="pt-3">Earlier</h3>
 
 <br>
 
@@ -84,15 +94,18 @@
       
       <div class="infinite-item">
         <a href = "{% url 'profile' notification.action_user.username %}">
-            <img src="{{notification.action_user.profile.image.url}}" class = "rounded-circle" width="50px" height="50px">
 
-            {% if notification.notification_type == 'request' %}
-            <h3>{{notification.action_user.username}} wants to follow you </h3>
+            <div class="row" style="max-width: 800px; height: 30px;">
+                <img src="{{notification.action_user.profile.image.url}}" class = "rounded-circle mx-4" width="50px" height="50px">
 
-            {% else %}
-            <h3>{{notification.action_user.username}} accepted your follow request </h3>
+                {% if notification.notification_type == 'request' %}
+                <h3 class="pt-1">{{notification.action_user.username}} wants to follow you </h3>
 
-            {% endif %}
+                {% else %}
+                <h3 class="pt-1">{{notification.action_user.username}} accepted your follow request </h3>
+
+                {% endif %}  
+            </div>
         </a>
       </div>
 
@@ -101,8 +114,10 @@
       
       <div class="infinite-item">
         <a href = "{% url 'posts:post_detail' notification.post.id %}">
-            <img src="{{notification.post.image.url}}"  width="50px" height="50px">
-            <h3>{{notification.action_user.username}} liked your post </h3>
+            <div class="row" style="max-width: 800px; height: 30px;">
+                <img src="{{notification.post.image.url}}" class="mx-4" width="50px" height="50px">
+                <h3 class="pt-1">{{notification.action_user.username}} liked your post </h3>   
+            </div>
         </a>
       </div>
 
@@ -110,8 +125,10 @@
         {% else %}
         <div class="infinite-item">
             <a href = "{% url 'posts:post_detail' notification.post.id %}">
-                <img src="{{notification.post.image.url}}"  width="50px" height="50px">
-                <h3>{{notification.action_user.username}} commented on your post </h3>
+                <div class="row" style="max-width: 800px; height: 30px;">
+                    <img src="{{notification.post.image.url}}" class="mx-4" width="50px" height="50px">
+                    <h3 class="pt-1">{{notification.action_user.username}} commented on your post </h3>   
+                </div>    
             </a>
         </div>
        

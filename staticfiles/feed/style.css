@@ -1,0 +1,34 @@
+.carousel-item{
+    height: 800px;
+} 
+.carousel-item img{
+    height: 700px;
+}
+
+h1.heading{
+    font-family: 'Pacifico', cursive;
+    font-size: 60px;
+}
+
+h4.subheading{
+    font-size: 30px;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: gray;
+}
+
+a.btn-block{
+    width: 75%;
+}
+
+img.post{
+    height:auto;
+}
+
+div.image{
+    max-width: 800px;
+    max-height : 800px;
+    background-color: black;
+    object-fit: contain;
+    overflow: hidden;
+    justify-content: center;
+    display: flex;

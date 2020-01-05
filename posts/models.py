@@ -18,15 +18,15 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('posts:post_detail', kwargs={'pk' : self.pk})
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
+   # def save(self, *args, **kwargs):
+    #    super().save(*args, **kwargs)
 
-        img = Image.open(self.image.path)
+     #   img = Image.open(self.image.path)
 
-        if img.height > 800 or img.width > 800:
-            output_size = (800,800)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+      #  if img.height > 800 or img.width > 800:
+       #     output_size = (800,800)
+        #    img.thumbnail(output_size)
+         #   img.save(self.image.path)
 
 
 class LikeonPost(models.Model):

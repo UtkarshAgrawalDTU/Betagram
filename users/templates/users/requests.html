@@ -13,24 +13,25 @@
 <div class="infinite-container">
     {% for request in requests %}
 
-      <div class="infinite-item">
-        <a href="{% url 'profile' request.follower_req.username %}">
-            <h2>{{ request.follower_req.username }} wants to follow you </h2>
-        </a>
-
-        <form method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="follower" value="{{request.follower_req.username}}">
-            <input type="hidden" name="status" value="accept">
-            <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
-        </form>
-
-        <form method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="follower" value="{{request.follower_req.username}}">
-            <input type="hidden" name="status" value="reject">
-            <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
-        </form>
+        <div class="row infinite-item">
+          <img src="{{request.follower_req.profile.image.url}}" class = "rounded-circle mx-4" width="50px" height="50px">
+            <a href="{% url 'profile' request.follower_req.username %}">
+                <h2 class="mr-4 pt-1">{{ request.follower_req.username }} wants to follow you </h2>
+            </a>
+            <form class= "mx-2" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="follower" value="{{request.follower_req.username}}">
+              <input type="hidden" name="status" value="accept">
+              <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
+          </form>
+  
+          <form class= "mx-2" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="follower" value="{{request.follower_req.username}}">
+              <input type="hidden" name="status" value="reject">
+              <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
+          </form>
+        
       </div>
     
     {% endfor %}

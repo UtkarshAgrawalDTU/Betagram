@@ -25,7 +25,7 @@ def RequestView(request, **kwargs):
         if status == 'accept':
             request.user.profile.followers.add(follower.profile)
             Request.objects.get(follower_req = follower, following_req = request.user).delete()
-            Notification.objects.create(concernced_user = follower, action_user = request.user, notification_type = 'req_accept')
+            Notification.objects.create(concerned_user = follower, action_user = request.user, notification_type = 'req_accept')
 
         if status == 'reject':
             Request.objects.get(follower_req = follower, following_req = request.user).delete()
@@ -112,7 +112,7 @@ def ProfileView(request, **kwargs):
 
     posts_set = Post.objects.filter(owner = prof_user).order_by('-date')
     page = request.GET.get('page', 1)
-    paginator = Paginator(posts_set, 20)    
+    paginator = Paginator(posts_set, 12)    
     
     try:
         posts = paginator.page(page)

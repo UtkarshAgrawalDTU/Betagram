@@ -10,49 +10,62 @@
 
 {% if request.user.is_authenticated %}
 
-<div class="infinite-container">
-<div class="row">
-  {% for post in posts %}
+  {% if not posts %}
+  <div class="alert alert-primary alert-dismissible fade show" role="alert">
+    <h5>
+      Your feed looks empty. Send your friends a follow request now ! Find your friends using the search bar.
+    </h5>
+    <h5>
+      Or it's time you had your first Betagram post ! Create a new post by clicking the + button on the Navigation bar
+    </h5>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% endif %}
 
-  <div class="infinite-item mx-auto col-lg-12 col-xs-12" style="object-fit: contain; border: 1px solid aquamarine; background-color: white;">
-    
-    <a href = "{% url 'profile' post.owner.username %}">
-      <div class="row mx-auto" style="max-width: 800px; height: 60px;">
-        <img src="{{post.owner.profile.image.url}}" class = "rounded-circle mx-3" width="50px" height="50px">
-          <h3 style="float:inline-start;" class="pt-1">{{post.owner.username}}</h3>
+
+  <div class="infinite-container">
+  <div class="row">
+    {% for post in posts %}
+
+    <div class="infinite-item mx-auto col-lg-12 col-xs-12" style="object-fit: contain; border: 1px solid aquamarine; background-color: white;">
+      
+      <a href = "{% url 'profile' post.owner.username %}">
+        <div class="row mx-auto" style="max-width: 800px; height: 60px;">
+          <img src="{{post.owner.profile.image.url}}" class = "rounded-circle mx-3" width="50px" height="50px">
+            <h3 style="float:inline-start;" class="pt-1">{{post.owner.username}}</h3>
+        </div>
+      </a>
+      
+      <a href = "{{ post.get_absolute_url }}">
+      <div class="image mx-auto">
+          <img src="{{post.image.url}}" class="post">
       </div>
     </a>
-    
-    <a href = "{{ post.get_absolute_url }}">
-    <div class="image mx-auto">
-        <img src="{{post.image.url}}" class="post">
+      
+      <div class="row mx-auto my-2" style="max-width: 800px; ">
+        <h2 style="color: black;">{{post.likecount}} likes</h2>
+      </div>
+
+      <div class="row mx-auto" style="max-width: 800px;">
+        <h2 style="color: black; font-size: 25px;">{{ post.caption|truncatechars:30 }}</h2>
+      </div>
+
+
+
     </div>
-  </a>
-    
-    <div class="row mx-auto my-2" style="max-width: 800px; ">
-      <h2 style="color: black;">{{post.likecount}} likes</h2>
-    </div>
-
-    <div class="row mx-auto" style="max-width: 800px;">
-      <h2 style="color: black; font-size: 25px;">{{ post.caption|truncatechars:30 }}</h2>
-    </div>
-
-
-
+  {% endfor %}
   </div>
-{% endfor %}
-</div>
-</div>
+  </div>
 
-
-
-{% if posts.has_next %}
-<div class="loading">
-  <h4>Loading...</h4>
-  <br>
-  <a class="infinite-more-link" href="?page={{ posts.next_page_number }}">Show More</a>
-</div>
-{% endif %}
+  {% if posts.has_next %}
+  <div class="loading">
+    <h4>Loading...</h4>
+    <br>
+    <a class="infinite-more-link" href="?page={{ posts.next_page_number }}">Show More</a>
+  </div>
+  {% endif %}
 
 
 {% else %}

@@ -18,7 +18,7 @@
 <h2>Notifications</h2>
 <br>
 
-{% if new_notifs.count == 0 %}
+{% if not new_notifs %}
     <h5>No new notifications</h5>
     <br>
 {% endif %}
@@ -56,18 +56,18 @@
 
     {% else %}
     
-    {% if not notification.action_user == request.user %}
+        {% if not notification.action_user == request.user %}
 
 
-    <a href = "{% url 'posts:post_detail' notification.post.id %}">
-    <div class="row" style="max-width: 800px; height: 30px;">
-            <img src="{{notification.post.image.url}}" class="mx-4" width="50px" height="50px">
-            <h3 class="pt-1">{{notification.action_user.username}} commented on your post </h3>
-       
-    </div>
-    </a>
-       
-    {% endif %}
+        <a href = "{% url 'posts:post_detail' notification.post.id %}">
+        <div class="row" style="max-width: 800px; height: 30px;">
+                <img src="{{notification.post.image.url}}" class="mx-4" width="50px" height="50px">
+                <h3 class="pt-1">{{notification.action_user.username}} commented on your post </h3>
+        
+        </div>
+        </a>
+        
+        {% endif %}
 
     {% endif %}
 
@@ -84,7 +84,6 @@
 <h3 class="pt-3">Earlier</h3>
 
 <br>
-
 
 <div class="infinite-container">
 

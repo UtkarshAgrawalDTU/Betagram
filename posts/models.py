@@ -8,7 +8,7 @@ from django.shortcuts import reverse
 class Post(models.Model):
     owner = models.ForeignKey(User, on_delete = models.CASCADE)
     image = models.ImageField(upload_to='user_posts')
-    caption = models.TextField(max_length=1000)
+    caption = models.TextField(max_length=1000, blank=True)
     date = models.DateTimeField(default = now)
     likecount = models.IntegerField(default=0)
 

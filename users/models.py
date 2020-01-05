@@ -46,7 +46,7 @@ class TimeTrack(models.Model):
     last_login = models.DateTimeField(default = now)
 
     def __str__(self):
-        return f'Last login at {self.last_login}'
+        return f'Last login by {self.user.username} at {self.last_login}'
 
     def save(self, *args, **kwargs):
         self.last_login = now()

@@ -11,9 +11,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required
 def NotifView(request):
 
-    new_notifs = Notification.objects.filter(concerned_user = request.user, date__gte = request.user.time_track.last_login).order_by('-date')
+    new_notifs = Notification.objects.filter(concerned_user = request.user, date__gt = request.user.time_track.last_login).order_by('-date')
     all_notifs = Notification.objects.filter(concerned_user = request.user, date__lt = request.user.time_track.last_login).order_by('-date')
-    request.user.time_track.save()
+    
     
     page = request.GET.get('page', 1)
     paginator = Paginator(all_notifs, 5)    
@@ -25,5 +25,6 @@ def NotifView(request):
     except EmptyPage:
         old_notifs = paginator.page(paginator.num_pages)
 
+    request.user.time_track.save()
     return render(request, 'notifications/notifs.html', {'new_notifs': new_notifs, 'old_notifs' : old_notifs})
 

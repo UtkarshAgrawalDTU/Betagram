@@ -14,7 +14,7 @@ class SearchResultView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         query = self.request.GET.get('q')
 
-        if query == None:
+        if query == "":
             return User.objects.none()
         object_list = User.objects.filter(
             Q(username__icontains = query) | Q(first_name__icontains = query) | Q(last_name__icontains = query) | Q(email__icontains = query)

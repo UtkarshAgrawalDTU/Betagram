@@ -4,116 +4,198 @@
 {% block body %}
 
 
+{% if messages %}
+{% for message in messages %}
+<div class="{{ message.tags }} alert alert-{{message.tags}} alert-dismissible fade show">{{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+</div>
+{% endfor %}
+{% endif %}
+
+
 {% if accept_request %}
 
-<h2>{{ user.username }} sent you a request </h2>
-
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="status" value="accept">
-    <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
-</form>
-
-
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="status" value="reject">
-    <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
-</form>
-
-<br>
-
-{% endif %}
-
-
-
-<h1>Profile</h1>
-<img src="{{user.profile.image.url}}">
-<h2>{{user.username}}</h2>
-<h2>{{user.first_name}}  {{user.last_name}}</h2>
-
-<h2>Posts - {{user.post_set.count}}</h2>  
-
-{% if is_following or user == request.user %}
-<a href="{% url 'follower_list' user.username %}">
-    <h2>Followers - {{user.profile.followers.count}}</h2>
-</a>
-
-{% else %}
-    <h2>Followers - {{user.profile.followers.count}}</h2>
-
-{% endif %}
-
-
-
-{% if is_following or user == request.user %}
-<a href="{% url 'following_list' user.username %}">
-    <h2>Following - {{user.profile.following.count}}</h2>    
-</a>
-
-{% else %}
-    <h2>Following - {{user.profile.following.count}}</h2> 
+<div class="alert alert-primary" style="text-align: center;">
+    <h2>{{ user.username }} sent you a follow request </h2>
+    <div class="row" style="display: flex; justify-content: center;">
+        <form method="POST" class="mx-2">
+            {% csrf_token %}
+            <input type="hidden" name="status" value="accept">
+            <button class="btn btn-success btn-md mt-1 mb-1" type="submit">Accept</button>
+        </form>
     
+        <form method="POST" class="mx-2">
+            {% csrf_token %}
+            <input type="hidden" name="status" value="reject">
+            <button class="btn btn-danger btn-md mt-1 mb-1" type="submit">Reject</button>
+        </form>
+    </div>
+</div>
+
+
 {% endif %}
-<h3>{{user.profile.bio}}</h3>
 
 
-
-
-
-
-
-
-
+<div class="row">
+    <h2 class="mb-3" style="font-weight: 600;">{{user.username}}</h2>
 {% if request.user == user %}
-<a class="btn btn-secondary btn-lg mt-1 mb-1" href="{% url 'profile-edit' username=request.user.username %}">Edit</a>
-
-
-{% elif is_following %}
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="status" value="unfollow">
-    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit"">Unfollow</button>
-</form>
-
-
-{% elif request_sent %}
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="status" value="remove_request">
-    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Request Sent -- Remove follow request</button>
-</form>
-
-
-{% else %}
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="status" value="follow">
-    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Follow</button>
-</form>
+<div class="btn-group ml-auto">
+    <button class="btn btn-lg dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-cog"></i>
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item btn btn-secondary btn-lg mt-1 mb-1" href="{% url 'profile-edit' username=request.user.username %}">Edit Profile</a>
+    </div>
+</div>
 {% endif %}
+</div>
 
 
-{% if is_followed %}
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="status" value="unfollowed">
-    <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Remove Follower</button>
-</form>
-{% endif %}
+
+
+<div class="row my-5">
+    <div class="col-lg-3 col-md-3 col-sm-6 px-3 py-3">
+        <img class = "rounded-circle mx-auto" style = "display:block;" src="{{user.profile.image.url}}" width="150px" height="150px">
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-6 px-3 py-3" style="text-align: center;">
+        <div class="row">
+            <div class="col-lg-12 my-2">
+                <h2 style="font-weight: 600;">Posts</h2>
+            </div>
+            <div class="col-lg-12 my-2">
+                <h2>{{user.post_set.count}}</h2> 
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-3 col-md-3 col-sm-6 px-3 py-3" style="text-align: center;">
+        {% if is_following or user == request.user %}
+            <div class="row">
+                <div class="col-lg-12 my-2">
+                    <h2 style="font-weight: 600;">Followers</h2>
+                </div>
+                <div class="col-lg-12 my-2">
+                    <a href="{% url 'follower_list' user.username %}">
+                        <h2>{{user.profile.followers.count}}</h2>
+                    </a>
+                </div>
+            </div>
+    
+        {% else %}
+            <div class="row">
+                <div class="col-lg-12 my-2">
+                    <h2 style="font-weight: 600;">Followers</h2>
+                </div>
+                <div class="col-lg-12 my-2">
+                    <h2>{{user.profile.followers.count}}</h2>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <div class="col-lg-3 col-md-3 col-sm-6 px-3 py-3" style="text-align: center;">
+        
+        {% if is_following or user == request.user %}
+        
+            <div class="row">
+                <div class="col-lg-12 my-2">
+                    <h2 style="font-weight: 600;">Following</h2>
+                </div>
+                    <div class="col-lg-12 my-2">
+                        <a href="{% url 'following_list' user.username %}">
+                        <h2>{{user.profile.following.count}}</h2>
+                        </a>
+                    </div>
+            </div>
+    
+        {% else %}
+            <div class="row">
+                <div class="col-lg-12 my-2">
+                    <h2 style="font-weight: 600;">Following</h2>
+                </div>
+                <div class="col-lg-12 my-2">
+                    <h2>{{user.profile.following.count}}</h2>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<h3 style="font-weight: 600;">{{user.first_name}}  {{user.last_name}}</h3>
+<h4>{{user.profile.bio}}</h4>
+
+
+
+
+
+<div class="row my-4">
+    {% if request.user == user %}
+
+    {% elif is_following%}
+    <form class = "mx-2" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="status" value="unfollow">
+        <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit"">Unfollow</button>
+    </form>
+
+
+    {% elif request_sent %}
+    <form class = "mx-2" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="status" value="remove_request">
+        <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Request Sent -- Remove follow request</button>
+    </form>
+
+
+    {% else %}
+    <form class = "mx-2" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="status" value="follow">
+        <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Follow</button>
+    </form>
+    {% endif %}
+
+
+    {% if is_followed %}
+    <form class = "mx-2" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="status" value="unfollowed">
+        <button class="btn btn-secondary btn-lg mt-1 mb-1" type="submit">Remove Follower</button>
+    </form>
+    {% endif %}
+</div>
+
 
 <br>
 <br>
 
 {% if request.user == user or is_following %}
 
-    <h3>Posts</h3>
+    <h3 style="font-weight: 600;">Posts</h3>
+    <hr>
     <br>
 
-    <div class="infinite-container">
+    <div class="row infinite-container mb-5" style="text-align: center;">
         {% for post in posts %}
-        <div class="infinite-item" style="display: inline;">
-            <a href = "{{ post.get_absolute_url }}"><img src="{{post.image.url}}" width="200", height="200"></a>
+        
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 infinite-item" style="
+        max-height : 280px;
+        object-fit:fill;
+        overflow: hidden;
+        justify-content: center;
+        display: flex;
+        padding: 0;
+        margin: 0;
+    ">
+            <a href = "{{ post.get_absolute_url }}" class="py-2 px-2" style="background-color: black;">
+                <img src="{{post.image.url}}" style="height: 280px; width: 100%;">
+            </a>
         </div>
         {% endfor %}
     </div>

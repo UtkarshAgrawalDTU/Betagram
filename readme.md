@@ -1,3 +1,3 @@
-# Minigram
+# Betagram
 
-Minigram App
+A mini Instagram Clone

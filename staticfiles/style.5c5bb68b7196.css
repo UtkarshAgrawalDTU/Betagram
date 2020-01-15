@@ -1,0 +1,26 @@
+body {
+    margin-top: 100px;
+    margin: 0 auto;
+    background-color: #F8F9FA
+}
+.infinite-item, .loading {
+    margin-bottom: 5px;
+    color: #fff;
+    padding: 25px 0;
+}
+.loading {
+    text-align: center;
+    color: lightslategray;
+ }
+
+a.infinite-more-link{
+    color: lightslategray;
+}
+
+a{
+    color: black;
+}
+
+nav{
+    border-bottom: 2px solid white;
+}

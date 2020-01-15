@@ -1,0 +1,12 @@
+h1.heading{
+    font-family: 'Pacifico', cursive;
+    font-size: 60px;
+    text-align: center;
+}
+
+h4.subheading{
+    font-size: 30px;
+    font-family: 'Source Sans Pro', sans-serif;
+    color: gray;
+    text-align: center;
+}

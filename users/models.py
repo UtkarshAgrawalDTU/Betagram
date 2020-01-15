@@ -8,7 +8,7 @@ class Profile(models.Model):
 
     #One and only one
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile') 
-    bio = models.TextField(default="", max_length=100)
+    bio = models.TextField(default="", max_length=100, blank = True)
     image = models.ImageField(upload_to='user_profile_pic', default='default.jpg') 
     following = models.ManyToManyField("self", symmetrical=False, related_name='followers', blank = True)
 

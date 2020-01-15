@@ -6,6 +6,9 @@
 <link rel="stylesheet" href="{% static 'users/login_style.css' %}">
 {% endblock %}
 
+
+{% block title %}Login{% endblock %}
+
 {% block body %}
 
 {% if request.user.is_authenticated %}

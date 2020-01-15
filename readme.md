@@ -1,5 +1,5 @@
 # Betagram
-> Betagram is a mini-Instagram clone designed using Django, JavaScript and Bootstrap ! Just like Instagram, this application allows you to connect with your friends and share images. 
+> Betagram is a mini-Instagram clone designed using Django, JavaScript and Bootstrap ! Just like Instagram, this application allows you to connect with your friends and share images. Check it out here : [Betagram](https://betagram.herokuapp.com)
 
 ## Table of contents
 * [General info](#general-info)
